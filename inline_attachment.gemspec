@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 
-module_name = Dir.glob('*.gemspec')[0].sub(/\.gemspec$/,'')
+module_name = "inline_attachment"
 
 Gem::Specification.new do |s|
   s.version = "0.3.3"
   s.authors = ["Jason King", "Edmond Leung"]
   s.summary = %q{Makes image_tag in an ActionMailer template embed the images in the emails}
 
-	s.files = %w/README/ + Dir.glob(File.join(%w/lib ** *.rb/))
+	s.files = %w{README lib/inline_attachment.rb lib/tmail_content_id.rb}
 
 	#s.test_files       = Dir.glob('tests/*.rb')
 
