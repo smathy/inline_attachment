@@ -1,0 +1,79 @@
+= Inline Attachment
+
+This package adds full support for embedding inline images into your HTML emails
+through ActionMailer.
+
+It is created from a Rails patch #2179 (found at http://dev.rubyonrails.org/ticket/2179).
+
+The goal of this gem is to remove the need for manual patching.
+
+== Installation
+
+To perform a system wide installation:
+
+<tt>gem install inline_attachment</tt>
+
+To use inline_attachment in your project, add the following line to your project's
+config/environment.rb:
+
+<tt>require 'inline_attachment'</tt>
+
+
+== Usage
+
+==== Embed Images Manually
+
+The code to add inline attachments into your HTML emails is pretty simple:
+
+	@cid = Time.now.to_f.to_s + "foobar.png@domain.com"
+ 
+	inline_attachment :content_type => "image/png", 
+	                  :body => File.read("#{RAILS_ROOT}/public/images/foobar.png"),
+	                  :filename => "foobar.png",
+	                  :cid => "<#{@cid}>"
+	
+Note that the above code should go into your ActionMailer.
+
+The instance variable @cid is the unique identifier your MIME email will be using to
+locate the attached image. All you have to do is then pass it over to your email
+template, and display it like so:
+
+	<img src="cid:<%= @cid %>" alt="Foo Bar" />
+	
+==== Embed Images Automatically
+
+As of version 0.2.0, Inline Attachment automatically embeds any images found within
+your ActionMailer templates. There is no longer any extra code required when adding images
+into your mail templates. Though, you must use rails image_tag helper when displaying
+images within your mailer views.
+
+With version 0.3.0, you are now able to embed images into nested parts by specifying 
+a part container to place the attached images into. For example:
+
+	class Notifier < ActionMailer::Base
+	  def images
+	    recipients   "test@test.com"
+	    from         "test@test.com"
+	    subject      "Test"
+	    content_type "multipart/alternative"
+    
+	    part "text/plain" do |p|
+	      p.body = render_message("images.text.plain.rhtml", {})
+	      p.content_disposition = ""
+	      p.transfer_encoding = "7bit"
+	      p.charset = "ISO-8859-15"
+	    end
+    
+	    part "multipart/related" do |p|
+	      p.parts << ActionMailer::Part.new(
+	        :content_type => "text/html", :body => render_message("images.text.html.rhtml", :part_container => p),
+	        :disposition => "",
+	        :charset => "ISO-8859-15",
+	        :transfer_encoding => "7bit"
+	      )
+	    end
+	  end
+	end
+	
+You can see that we passed in the variable :part_container => p into the body of the nested part.
+This needs to be done so that the images are embedded into the part that they are used in.
