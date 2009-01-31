@@ -3,7 +3,7 @@
 module_name = "inline_attachment"
 
 Gem::Specification.new do |s|
-  s.version = "0.3.3"
+  s.version = "0.3.4"
   s.authors = ["Jason King", "Edmond Leung"]
   s.summary = %q{Makes image_tag in an ActionMailer template embed the images in the emails}
 
