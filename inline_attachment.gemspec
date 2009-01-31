@@ -3,7 +3,7 @@
 module_name = "inline_attachment"
 
 Gem::Specification.new do |s|
-  s.version = "0.3.4"
+  s.version = "0.3.5"
   s.authors = ["Jason King", "Edmond Leung"]
   s.summary = %q{Makes image_tag in an ActionMailer template embed the images in the emails}
 
@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
 
 	#s.test_files       = Dir.glob('tests/*.rb')
 
+	s.rubyforge_project = module_name
   s.name = module_name.capitalize.gsub(/_(.)/){$1.upcase}
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.date = Time.now.strftime("%Y-%m-%d")
