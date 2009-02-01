@@ -3,11 +3,11 @@
 module_name = "inline_attachment"
 
 Gem::Specification.new do |s|
-  s.version = "0.3.6"
+  s.version = "0.3.7"
   s.authors = ["Jason King", "Edmond Leung"]
   s.summary = %q{Makes image_tag in an ActionMailer template embed the images in the emails}
 
-	s.files = %w{README lib/inline_attachment.rb lib/tmail_content_id.rb}
+	s.files = %w{README lib/inline_attachment.rb}
 
 	#s.test_files       = Dir.glob('tests/*.rb')
 

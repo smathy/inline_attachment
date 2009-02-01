@@ -1,3 +1,5 @@
+TMail::HeaderField::FNAME_TO_CLASS.delete('content-id')
+
 module ActionMailer
   module PartContainer
     # Add an inline attachment to a multipart message. 
@@ -73,7 +75,7 @@ module ActionView
            
         if @part_container.is_a?(ActionMailer::Base) or @part_container.is_a?(ActionMailer::Part)
           file_path = "#{RAILS_ROOT}/public#{image_path(source).split('?').first}"
-          basename  = File.basename(file_path, '.*')
+          basename  = File.basename(file_path)
           ext       = basename.split('.').last
           cid       = Time.now.to_f.to_s + "#{basename}@inline_attachment"
           file      = File.open(file_path, 'rb')
@@ -102,16 +104,3 @@ module ActionView
   end
 end
 
-class DummyClass
-  def relative_url_root
-    ""
-  end
-end
-
-module ActionMailer #:nodoc:
-  class Base
-    def request
-      DummyClass.new
-    end
-  end
-end
