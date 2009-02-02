@@ -3,77 +3,66 @@
 This package adds full support for embedding inline images into your HTML emails
 through ActionMailer.
 
-It is created from a Rails patch #2179 (found at http://dev.rubyonrails.org/ticket/2179).
-
-The goal of this gem is to remove the need for manual patching.
-
 == Installation
 
 To perform a system wide installation:
 
-<tt>gem install inline_attachment</tt>
+<tt>gem source -a http://gems.github.com</tt>
+<tt>gem install JasonKing-inline_attachment</tt>
 
 To use inline_attachment in your project, add the following line to your project's
 config/environment.rb:
 
-<tt>require 'inline_attachment'</tt>
+<tt>config.gem 'inline_attachment'</tt>
 
 
 == Usage
 
-==== Embed Images Manually
+I've rewritten most of Edmond's great work in this version.  I now override
+path_to_image instead of image_tag because a big reason for all the Rails2
+breakages was because image_tag was basically reproduced in previous versions,
+so broke when that method changed.
 
-The code to add inline attachments into your HTML emails is pretty simple:
+Now we override the very simple path_to_image, and most importantly we really
+just add our own stuff for ActionMailer templates, and resort to the existing
+code for everything else.
 
-	@cid = Time.now.to_f.to_s + "foobar.png@domain.com"
- 
-	inline_attachment :content_type => "image/png", 
-	                  :body => File.read("#{RAILS_ROOT}/public/images/foobar.png"),
-	                  :filename => "foobar.png",
-	                  :cid => "<#{@cid}>"
-	
-Note that the above code should go into your ActionMailer.
+I've also integrated in with the new implicit multipart stuff.  So now, there is
+so little code required!
 
-The instance variable @cid is the unique identifier your MIME email will be using to
-locate the attached image. All you have to do is then pass it over to your email
-template, and display it like so:
 
-	<img src="cid:<%= @cid %>" alt="Foo Bar" />
-	
-==== Embed Images Automatically
-
-As of version 0.2.0, Inline Attachment automatically embeds any images found within
-your ActionMailer templates. There is no longer any extra code required when adding images
-into your mail templates. Though, you must use rails image_tag helper when displaying
-images within your mailer views.
-
-With version 0.3.0, you are now able to embed images into nested parts by specifying 
-a part container to place the attached images into. For example:
-
-	class Notifier < ActionMailer::Base
-	  def images
-	    recipients   "test@test.com"
-	    from         "test@test.com"
-	    subject      "Test"
-	    content_type "multipart/alternative"
-    
-	    part "text/plain" do |p|
-	      p.body = render_message("images.text.plain.rhtml", {})
-	      p.content_disposition = ""
-	      p.transfer_encoding = "7bit"
-	      p.charset = "ISO-8859-15"
-	    end
-    
-	    part "multipart/related" do |p|
-	      p.parts << ActionMailer::Part.new(
-	        :content_type => "text/html", :body => render_message("images.text.html.rhtml", :part_container => p),
-	        :disposition => "",
-	        :charset => "ISO-8859-15",
-	        :transfer_encoding => "7bit"
-	      )
-	    end
-	  end
+  class Notifier < ActionMailer::Base
+    def signup
+	    recipients %q{"Testing IA" <testing@handle.it>}
+		  from       %q{"Mr Tester" <tester@handle.it>}
+		  subject "Here's a funky test"
+    end
 	end
-	
-You can see that we passed in the variable :part_container => p into the body of the nested part.
-This needs to be done so that the images are embedded into the part that they are used in.
+
+	# Oh yeah baby!  Read it and weep!  So how's this work?  Well, you'll need
+	# your templates named properly - see the `Multipart email` section of the
+	# ActionMailer::Base docs.
+
+	# signup.text.plain.erb
+	Your username is: <%= @username %>
+
+  # signup.text.html.erb
+	<html><head><title>Signup Notification</title></head><body>
+	  <%= image_tag "logo.png" %>
+		<p>Your username is: <%=h @username %>
+	</body></html>
+
+
+That's it!  InlineAttachment will look for
+"#{RAILS_ROOT}/public/images/logo.png" and will do the right thing and embed it
+inline into the HTML version of the email.  ActionMailer will do the right thing
+and offer the recipient both the text/plain and text/html parts as alternatives.
+
+
+Note, that you should still be able to use this in the 0.3.0 way if you have
+code that uses that.  But there were a lot of alternatives, and the examples in
+here didn't show a crucial step of shuffling the parts around to be sure that
+the image parts came after the html.
+
+You can also do the old "manual" method if you want.
+

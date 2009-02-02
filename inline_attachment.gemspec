@@ -3,8 +3,8 @@
 module_name = "inline_attachment"
 
 Gem::Specification.new do |s|
-  s.version = "0.3.7"
-  s.authors = ["Jason King", "Edmond Leung"]
+  s.version = "0.4.0"
+  s.author = "Jason King"
   s.summary = %q{Makes image_tag in an ActionMailer template embed the images in the emails}
 
 	s.files = %w{README lib/inline_attachment.rb}
