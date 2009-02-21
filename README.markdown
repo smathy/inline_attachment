@@ -43,7 +43,7 @@ so little code required!
 	end
 	
 Oh yeah baby!  Read it and weep!  So how's this work?  Well, you'll need
-your templates named properly - see the `Multipart email` section of the
+your templates named properly - see the _Multipart email_ section of the
 ActionMailer::Base docs.
 	
 #### signup.text.plain.erb
