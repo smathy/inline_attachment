@@ -15,7 +15,7 @@ To perform a system wide installation:
 To use inline_attachment in your project, add the following line to your project's
 config/environment.rb:
 
-	config.gem 'inline_attachment'
+	config.gem 'JasonKing-inline_attachment', :lib => 'inline_attachment'
 
 
 Usage
@@ -60,6 +60,9 @@ That's it!  InlineAttachment will look for
 `#{RAILS_ROOT}/public/images/logo.png` and will do the right thing and embed it
 inline into the HTML version of the email.  ActionMailer will do the right thing
 and offer the recipient both the `text/plain` and `text/html` parts as alternatives.
+
+**Note the filenames include the (unusual) major.minor MIME type, look above at
+the filenames closely.**
 
 
 Note, that you should still be able to use this in the 0.3.0 way if you have
