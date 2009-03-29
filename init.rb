@@ -1,0 +1,1 @@
+require "inline_attachment"
