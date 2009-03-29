@@ -26,7 +26,6 @@ Use this to install as a plugin in a Ruby on Rails app:
 
 	$ script/plugin install git://github.com/JasonKing/inline_attachment.git
 
-
 ### As a Rails Plugin (using git submodules) ###
 
 Use this if you prefer the idea of being able to easily switch between using edge or a tagged version:
@@ -93,4 +92,5 @@ Contributors
 ------------
  
 * Jason King (JasonKing)
-* Matt Griffin (betamatt)
+* Matt Griffin (betamatt) - file:// and chaining cleanup
+* Logan Raarup (logandk)  - pluginified
