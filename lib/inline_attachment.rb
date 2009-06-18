@@ -65,14 +65,15 @@ module ActionView
             basename  = File.basename(file_path)
             ext       = basename.split('.').last
             cid       = Time.now.to_f.to_s + "#{basename}@inline_attachment"
-            file      = File.open(file_path, 'rb')
 
-            @part_container.inline_attachment(:content_type => "image/#{ext}",
-                                          :body         => file.read,
-                                          :filename     => basename,
-                                          :cid          => "<#{cid}>",
-                                          :disposition  => "inline")
-            
+            File.open(file_path, 'rb') do |file|
+              @part_container.inline_attachment(:content_type => "image/#{ext}",
+                                            :body         => file.read,
+                                            :filename     => basename,
+                                            :cid          => "<#{cid}>",
+                                            :disposition  => "inline")
+            end
+
             return "cid:#{cid}"
           end
         end
