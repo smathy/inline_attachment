@@ -94,3 +94,4 @@ Contributors
 * Jason King (JasonKing)
 * Matt Griffin (betamatt) - file:// and chaining cleanup
 * Logan Raarup (logandk)  - pluginified
+* Jeffrey Damick (jdamick) - bugfix
