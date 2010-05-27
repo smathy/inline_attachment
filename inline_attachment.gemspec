@@ -3,11 +3,12 @@
 module_name = "inline_attachment"
 
 Gem::Specification.new do |s|
-  s.version = "0.4.4"
+  s.version = "0.4.5"
   s.author = "Jason King"
   s.summary = %q{Makes image_tag in an ActionMailer template embed the images in the emails}
+  s.description = File.read('README.markdown')
 
-	s.files = %w{rails/init.rb README.markdown lib/inline_attachment.rb}
+	s.files = %w{LICENSE rails/init.rb README.markdown lib/inline_attachment.rb}
 
 	#s.test_files       = Dir.glob('tests/*.rb')
 
