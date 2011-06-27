@@ -11,26 +11,24 @@ Installation
 
 To perform a system wide installation:
 
-	gem source -a http://gems.github.com
-	gem install JasonKing-inline_attachment
+	gem install inline_attachment
 
 To use inline_attachment in your project, add the following line to your project's
 config/environment.rb:
 
-	config.gem 'JasonKing-inline_attachment', :lib => 'inline_attachment'
-
+	config.gem 'inline_attachment'
 
 ### As a Rails Plugin ###
 
 Use this to install as a plugin in a Ruby on Rails app:
 
-	$ script/plugin install git://github.com/JasonKing/inline_attachment.git
+	$ script/plugin install git://github.com/smathy/inline_attachment.git
 
 ### As a Rails Plugin (using git submodules) ###
 
 Use this if you prefer the idea of being able to easily switch between using edge or a tagged version:
 
-	$ git submodule add git://github.com/JasonKing/inline_attachment.git vendor/plugins/inline_attachment
+	$ git submodule add git://github.com/smathy/inline_attachment.git vendor/plugins/inline_attachment
 
 
 Usage
