@@ -1,3 +1,13 @@
+## Officially Unsupported
+
+From ActionMailer 3.0 and above, inline attachments have been made very simple
+and are built into Rails. They're not quite as simple as they were with
+`inline_attachments`, but [see
+here](http://guides.rubyonrails.org/action_mailer_basics.html#making-inline-attachments)
+for how to do them.
+
+---
+
 Inline Attachment
 =================
 
